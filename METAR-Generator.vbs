@@ -1,4 +1,9 @@
-Dim a, b, c, d, di, de, ei, e, f, g, h1, h2, h, i, j, k, l, m, n, o
+Option Explicit
+'Const CREATE_FILE
+
+Dim MSG, a, b, c, d, di, de, ei, e, f, g, h1, h2, h, i, j, k, l, m, n, o
+Dim fso, data
+
 a = InputBox("地域略号を入力", "METAR_Generator")
 b = InputBox("観測日時を入力(UTC)[日+時間]", "METAR_Generator") & "Z"
 c = InputBox("風向を入力(度)", "METAR_Generator")
@@ -21,4 +26,11 @@ j = "Q" & InputBox("気圧を入力[hPa]", "METAR_Generator")
 k = InputBox("国内指示符?[無ければこの先からは空白でOK]", "METAR_Generator")
 l = InputBox("雲量・雲形・雲低の高さ", "METAR_Generator")
 m = "A" & InputBox("気圧を入力[inHg]", "METAR_Generator")
-MsgBox ("METAR " & a & " " & b & " " & c & d & " " & e & " " & f & " " & g & " " & h & j & " " & k & " " & l & " " & m)
+MSG = "METAR " & a & " " & b & " " & c & d & " " & e & " " & f & " " & g & " " & h & " " & j & " " & k & " " & l & " " & m
+o = MsgBox("METAR " & a & " " & b & " " & c & d & " " & e & " " & f & " " & g & " " & h & " " & j & " " & k & " " & l & " " & m, vbOKOnly + vbExclamation + vbApplicationModal + vbSystemModal, "Generated")
+
+Set fso = CreateObject("Scripting.FileSystemObject")
+Set data = fso.CreateTextFile("METAR_GeneratedFile.txt", true)
+data.WriteLine(MSG)
+data.Close
+Set fso = Nothing
